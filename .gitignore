@@ -1,0 +1,15 @@
+# Environments
+venv/
+.env
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Downloaded Media
+*.mp4
+*.jpg
+*.jpeg
+
+# VS Code settings
+.vscode/
