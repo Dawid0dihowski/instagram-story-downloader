@@ -3,9 +3,10 @@ from playwright.sync_api import sync_playwright
 import re
 import urllib.request
 
+
 class InstagramStoryDownloader:
     """
-    A class to automate downloading Instagram Stories using Playwritght
+    A class to automate downloading Instagram Stories using Playwright
     """
     def __init__(self,session_id: str):
         self.session_id = session_id
@@ -47,19 +48,21 @@ class InstagramStoryDownloader:
             time.sleep(2)
 
             if(self.video_url is not None):
-                urllib.request.urlretrieve(self.video_url, f"{target_profile}.story.{int(time.time())}.mp4")
+                print("Pobieram wideo...")
+                file_name = f"story_{target_profile}_{int(time.time())}.mp4"
+                
+                # Tworzymy zapytanie z fałszywym nagłówkiem User-Agent
+                req = urllib.request.Request(self.video_url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)'})
+                with urllib.request.urlopen(req) as response, open(file_name, 'wb') as out_file:
+                    out_file.write(response.read())
+                    
+                print(f"✅ Zapisano: {file_name}")
             elif(self.img_url is not None):
-                urllib.request.urlretrieve(self.img_url, f"{target_profile}_story_{int(time.time())}.jpg")
-            time.sleep(2)
-
-        
-           
-
-
-if __name__ == "__main__":
-    ...
-
-
-
-    
-
+                print("Pobieram zdjęcie...")
+                file_name = f"story_{target_profile}_{int(time.time())}.jpg"
+                
+                req = urllib.request.Request(self.img_url, headers={'User-Agent': 'Mozilla/5.0'})
+                with urllib.request.urlopen(req) as response, open(file_name, 'wb') as out_file:
+                    out_file.write(response.read())
+                print(f"✅ Zapisano: {file_name}")
+            time.sleep(50)
