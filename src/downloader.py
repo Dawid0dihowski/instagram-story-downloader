@@ -45,7 +45,28 @@ class InstagramStoryDownloader:
             page = context.new_page()
             page.on("request", self._intercept_request)
             page.goto(f"https://www.instagram.com/stories/{target_profile}")
-            time.sleep(2)
+
+
+            
+            print("Sprawdzam, czy trzeba potwierdzić wyświetlenie...")
+            try:
+                page.get_by_role("button", name="View Story").click(timeout=5000)
+                print("Kliknięto 'View Story'! Ładuję relację...")
+                
+            except Exception:
+                pass
+            
+            print("Czekam na fizyczne pojawienie się wideo lub zdjęcia na ekranie...")
+            try:
+                # To jest klucz! Playwright czeka maksymalnie 15 sekund na załadowanie playera
+                page.wait_for_selector("video, img", timeout=15000)
+                # Dajemy naszemu szpiegowi w tle 3 sekundy na wyłapanie linku z ruchu sieciowego
+                time.sleep(3) 
+            except Exception as e:
+                print(f"Nie udało się załadować odtwarzacza Instagrama: {e}")
+
+
+
 
             if(self.video_url is not None):
                 print("Pobieram wideo...")
@@ -65,4 +86,5 @@ class InstagramStoryDownloader:
                 with urllib.request.urlopen(req) as response, open(file_name, 'wb') as out_file:
                     out_file.write(response.read())
                 print(f"✅ Zapisano: {file_name}")
-            time.sleep(50)
+
+            time.sleep(2)
