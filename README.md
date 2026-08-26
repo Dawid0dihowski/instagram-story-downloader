@@ -7,10 +7,8 @@ Unlike standard scraping tools, this script does not rely on the official Instag
 ## ✨ Features
 
 * **Network Interception:** Captures raw `.mp4` and `.jpg` streams directly from network traffic.
-* **Smart Filtering:** Ignores DASH audio-only streams to ensure downloaded videos contain both audio and video.
 * **Anti-Blocking Measures:** Emulates an iPhone 13 environment and uses a custom User-Agent during downloads to help prevent `403 Forbidden` errors.
 * **Secure Configuration:** Uses `python-dotenv` to keep sensitive Session IDs out of the source code.
-* **Object-Oriented Design (OOP):** Modular architecture separating configuration, execution, and download logic.
 
 ## ⚙️ Prerequisites
 
