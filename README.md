@@ -10,6 +10,7 @@ Unlike standard scraping tools, this script does not rely on the official Instag
 * **Anti-Blocking Measures:** Emulates an iPhone 13 environment and uses a custom User-Agent during downloads to help prevent `403 Forbidden` errors.
 * **Secure Configuration:** Uses `python-dotenv` to keep sensitive Session IDs out of the source code.
 
+
 ## ⚙️ Prerequisites
 
 * Python 3.7+
@@ -51,26 +52,37 @@ pip install -r requirements.txt
 ```bash
 playwright install
 ```
+## 🔏 Configuration
 
-## 🔐 Configuration
+To access stories, the script requires your Instagram `sessionid` cookie:
 
+### How to get your `sessionid`:
+1. Open your browser and log into [Instagram](https://www.instagram.com).
+2. Open Developer Tools by pressing `F12` (or `Ctrl + Shift + I` / `Cmd + Option + I` on macOS).
+3. Navigate to the **Application** tab (Chrome/Edge/Brave) or **Storage** tab (Firefox).
+4. In the left sidebar, expand **Cookies** and select `https://www.instagram.com`.
+5. Find the row with the name **`sessionid`** and copy its **Value**.
+
+### Setup `.env` file:
 1. Create a file named `.env` in the root directory.
-2. Add your Instagram Session ID to the file:
-
-```env
-INSTAGRAM_SESSION_ID=your_cookie_value_here
-```
-
+2. Add your copied session ID:
+   ```env
+   INSTAGRAM_SESSION_ID=your_cookie_value_here
+   ```
 > **Note:** Never share your `.env` file or commit it to GitHub. It is already included in `.gitignore`.
 
 ## 💻 Usage
 
-Currently, the target profile is configured inside the `main.py` file.
-
-Open `main.py` and change the profile name in the `download_story` method, then run:
+You can run the script directly from your terminal by passing the target profile name as an argument.
 
 ```bash
-python main.py
+python main.py <target profile>
+```
+
+example
+
+```bash
+python main.py cristiano
 ```
 
 The script will automatically launch a browser instance, handle the **"View Story"** confirmation, intercept the media URL, and save the file with a timestamp directly to your project folder.
